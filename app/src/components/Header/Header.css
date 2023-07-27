@@ -1,0 +1,28 @@
+.header__background {
+    background-color: #192937;
+    position: sticky;
+    top: 0;
+    padding-top: 0.5rem;
+    z-index: 30;
+    border-bottom: 1px solid #a19a9a;
+}
+
+.header__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 72rem;
+    padding: 0 0.75rem;
+    margin: 0 auto;
+}
+
+.logo-link {
+    display: inline-block;
+    width: auto;
+}
+
+.logo {
+    height: 3rem;
+    cursor: pointer;
+    padding: 0 0.75rem;
+}
