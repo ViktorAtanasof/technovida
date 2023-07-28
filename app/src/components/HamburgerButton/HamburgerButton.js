@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import '../HamburgerButton/HamburgerButton.css';
-import SideNav from '../Nav/SideNav/SideNav';
-import { Transition } from 'react-transition-group';
+import SideNav from '../SideNav/SideNav';
 
 function HamburgerButton() {
     const [navOpen, setNavOpen] = useState(false);
@@ -9,38 +8,23 @@ function HamburgerButton() {
     const openNav = () => {
         setNavOpen(true);
     }
-  
+
     const closeNav = () => {
-      setNavOpen(false);
+        setNavOpen(false);
     }
 
     return (
         <>
             <div className="hamburger-btn" onClick={openNav}>
-                &#9776; Open
+                &#9776;
             </div>
-            <Transition
-                in={navOpen}
-                timeout={300}
-                mountOnEnter
-                unmountOnExit
-            >
-                {state => {
-                    return (
-                        <>
-                            <SideNav isOpen={navOpen} state={state} />
-                            <div className='overlay'
-                                style={state === "entering" ? { animation: "show .3s forwards" }
-                                    : state === "entered" ? { opacity: "1" } : { animation: "show .3s backwards reverse" }}
-                                onClick={closeNav}></div>
-                            <div className='closeBtn'
-                                style={state === "entering" ? { animation: "show .3s forwards" }
-                                    : state === "entered" ? { opacity: "1" } : { animation: "show .3s backwards reverse" }}
-                                onClick={closeNav}>&times;</div>
-                        </>
-                    )
-                }}
-            </Transition >
+            {navOpen && (
+                <>
+                    <SideNav isOpen={navOpen} onCloseSidenav={closeNav} />
+                    <div className='overlay' onClick={closeNav}></div>
+                    <div className='closeBtn' onClick={closeNav}>&times;</div>
+                </>
+            )}
         </>
     );
 }
