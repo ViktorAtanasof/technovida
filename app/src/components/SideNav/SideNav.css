@@ -1,0 +1,85 @@
+.sidenav {
+  max-width: 18.75rem;
+  overflow: hidden;
+  width: 85%;
+  height: 100%;
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  background-color: #ffffff;
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+.sidenav.open {
+  opacity: 1;
+  animation: slideIn 0.3s ease-out;
+  transform: translateX(0);
+}
+
+.sidenavHeader {
+  color: #feffff;
+  background-color: #192937;
+  padding: 1rem;
+  font-size: 1rem;
+  text-align: center;
+}
+
+/* Style the category menu list */
+.category-menu {
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #192937;
+}
+
+.category-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.category-menu li {
+  padding: 8px 0;
+}
+
+.category-menu li:hover {
+  background-color: #f4f4f4;
+  color: #1877f2;
+  cursor: pointer;
+}
+
+.category-menu li.active {
+  color: #1877f2;
+  background-color: #f4f4f4;
+}
+
+/* Style the subcategory menu list */
+.subcategory-menu {
+  padding-top: 1rem;
+}
+
+.subcategory-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.subcategory-menu li {
+  padding: 8px 0;
+}
+
+.subcategory-menu span {
+  color: #1877f2;
+}
+
+/* Transition animations */
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
