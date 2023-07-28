@@ -1,0 +1,10 @@
+.products-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.main-content {
+    max-width: 72rem;
+    padding: 0 0.75rem;
+    margin: 0 auto;
+}
