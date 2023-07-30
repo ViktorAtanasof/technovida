@@ -16,7 +16,7 @@ function SideNav({
 
     const handleSubCategoryClick = () => {
         setSelectedCategory(null);
-        onCloseSidenav(); 
+        onCloseSidenav();
     }
 
     return (
@@ -44,11 +44,11 @@ function SideNav({
                     <h3>Subcategories for <span>{selectedCategory.name}</span>:</h3>
                     <ul>
                         {selectedCategory.subcategories?.map((subcategory, index) => (
-                            <li key={index} onClick={handleSubCategoryClick} >
-                                <Link to={`/${selectedCategory.name.toLowerCase()}/${subcategory.toLowerCase()}`}>
+                            <Link key={index} to={`/${selectedCategory.name.toLowerCase()}/${subcategory.toLowerCase()}`}>
+                                <li onClick={handleSubCategoryClick} >
                                     {subcategory}
-                                </Link>
-                            </li>
+                                </li>
+                            </Link>
                         ))}
                     </ul>
                 </div>
