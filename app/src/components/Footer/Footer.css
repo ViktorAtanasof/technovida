@@ -1,0 +1,91 @@
+.footer__background {
+  background-color: #192937;
+  padding-top: 0.5rem;
+}
+
+.footer {
+  margin: 0 auto;
+  max-width: 72rem;
+  padding: 0.875rem 1.875rem 1.25rem 1.875rem;
+  color: #feffff;
+  background-color: #192937;
+}
+
+.footer__main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.footer__logo {
+    height: 7rem;
+    cursor: pointer;
+}
+
+.nav__contact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.nav__title {
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.footer__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  max-width: max-content;
+  background-color: #feffff;
+  border-radius: 3rem;
+  color: #192937;
+  margin: 0.6rem 0;
+  font-size: 1rem;
+  padding: 0 1.3rem;
+}
+
+.footer__btn:hover {
+  background-color: #192937;
+  color: #feffff;
+  border: 2px solid #feffff;
+}
+
+.footer ul {
+  list-style: none;
+}
+
+.footer li {
+  line-height: 2rem;
+}
+
+.footer a {
+  text-decoration: none;
+}
+
+.nav__ul a {
+  color: #999;
+}
+
+.nav__ul a:hover {
+  color: #1876f2a9;
+}
+
+.nav__ul a:active {
+  color: #1877f2;
+}
+
+.legal {
+  color: #999;
+  margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+    .footer__logo {
+        height: 4rem;
+    }
+}
