@@ -5,6 +5,7 @@ import { collection, getDocs, limit, query, startAfter, where } from 'firebase/f
 import { db } from '../../firebase';
 import ProductCard from '../ProductCard/ProductCard';
 import Sort from '../Sort/Sort';
+import ProductFilter from '../ProductFilter/ProductFilter';
 
 function SubCategory() {
     const { category, subCategory } = useParams();
@@ -17,24 +18,34 @@ function SubCategory() {
     const [currentlyDisplayedTabletsCount, setCurrentlyDisplayedTabletsCount] = useState(0);
     const [currentlyDisplayedPhonesCount, setCurrentlyDisplayedPhonesCount] = useState(0);
     const [sortOption, setSortOption] = useState('');
+    const [selectedPriceFilter, setSelectedPriceFilter] = useState(''); // Add this line
+    const [selectedBrandFilter, setSelectedBrandFilter] = useState('');
 
     const capitalizedCategory = subCategory[0].toUpperCase() + subCategory.slice(1);
 
     useEffect(() => {
-        const fetchProducts = async (category, subCategory, sortOption) => {
+        const fetchProducts = async (category, subCategory, sortOption, priceFilter, brandFilter) => {
             try {
                 const productsRef = collection(db, category);
-                const q = query(
+                let q = query(
                     productsRef,
                     where('type', '==', subCategory),
                     limit(12),
                 );
-                const querySnap = await getDocs(q);
-                if (querySnap.size < 12) {
-                    setHasMoreProducts(false);
-                } else {
-                    setHasMoreProducts(true);
+                // Apply both price and brand filters if selected
+                if (priceFilter === 'under_100') {
+                    q = query(q, where('price', '<=', 100));
+                } else if (priceFilter === '100_to_500') {
+                    q = query(q, where('price', '>=', 100), where('price', '<=', 500));
+                } else if (priceFilter === '500_and_above') {
+                    q = query(q, where('price', '>=', 500));
                 }
+
+                if (brandFilter) {
+                    q = query(q, where('brand', '==', brandFilter));
+                }
+                const querySnap = await getDocs(q);
+                setHasMoreProducts(querySnap.size >= 12);
                 const lastVisible = querySnap.docs[querySnap.docs.length - 1];
                 setLastFetchedProduct(lastVisible);
                 const products = [];
@@ -54,7 +65,6 @@ function SubCategory() {
                 } else if (sortOption === 'price-desc') {
                     products.sort((a, b) => b.data.price - a.data.price);
                 }
-
                 setProducts(products);
                 setCurrentlyDisplayedTabletsCount(products.filter((product) => product.data.category === 'tablets').length);
                 setCurrentlyDisplayedPhonesCount(products.filter((product) => product.data.category === 'phones').length);
@@ -82,8 +92,8 @@ function SubCategory() {
                 console.log(error);
             }
         }
-        fetchProducts(category, subCategory, sortOption);
-    }, [category, subCategory, sortOption]);
+        fetchProducts(category, subCategory, sortOption, selectedPriceFilter, selectedBrandFilter);
+    }, [category, subCategory, sortOption, selectedPriceFilter, selectedBrandFilter]);
 
     useEffect(() => {
         setSortOption('');
@@ -91,6 +101,12 @@ function SubCategory() {
 
     const handleSortChange = (selectedOption) => {
         setSortOption(selectedOption);
+    };
+
+    const handleFilterChange = (priceFilter, brandFilter) => {
+        // Update the state variables for price and brand filters
+        setSelectedPriceFilter(priceFilter);
+        setSelectedBrandFilter(brandFilter);
     };
 
     const onFetchMoreProducts = async () => {
@@ -103,11 +119,7 @@ function SubCategory() {
                 limit(12),
             );
             const querySnap = await getDocs(q);
-            if (querySnap.size < 12) {
-                setHasMoreProducts(false);
-            } else {
-                setHasMoreProducts(true);
-            }
+            setHasMoreProducts(querySnap.size >= 12);
             const lastVisible = querySnap.docs[querySnap.docs.length - 1];
             setLastFetchedProduct(lastVisible);
             const products = [];
@@ -118,7 +130,18 @@ function SubCategory() {
                 });
             });
             setProducts((prevState) => {
-                return [...prevState, ...products];
+                const updatedProducts = [...prevState, ...products];
+                if (sortOption === 'name-asc') {
+                    return updatedProducts.sort((a, b) => a.data.name.localeCompare(b.data.name));
+                } else if (sortOption === 'name-desc') {
+                    return updatedProducts.sort((a, b) => b.data.name.localeCompare(a.data.name));
+                } else if (sortOption === 'price-asc') {
+                    return updatedProducts.sort((a, b) => a.data.price - b.data.price);
+                } else if (sortOption === 'price-desc') {
+                    return updatedProducts.sort((a, b) => b.data.price - a.data.price);
+                } else {
+                    return updatedProducts; // No sorting applied
+                }
             });
             const newTabletsCount = products.filter((product) => product.data.type === 'tablets').length;
             const newPhonesCount = products.filter((product) => product.data.type === 'phones').length;
@@ -139,17 +162,22 @@ function SubCategory() {
     return (
         <>
             <main className='main-content'>
-                <section>
-                    <h2>{capitalizedCategory}</h2>
-                    <p>{selectedSubCategoryDesc}</p>
+                <section className='category-section'>
+                    <h2 className="category-title">{capitalizedCategory}</h2>
+                    <p className="sub-category-desc">{selectedSubCategoryDesc}</p>
                     {category === 'phones' && (
-                        <p>{currentlyDisplayedPhonesCount} - {totalPhonesCount}</p>
+                        <p className="product-count">
+                            {currentlyDisplayedPhonesCount} of {totalPhonesCount} Products
+                        </p>
                     )}
                     {category === 'tablets' && (
-                        <p>{currentlyDisplayedTabletsCount} - {totalTabletsCount}</p>
+                        <p className="product-count">
+                            {currentlyDisplayedTabletsCount} of {totalTabletsCount} Products
+                        </p>
                     )}
                 </section>
-                <div className="sort">
+                <div className="sort-filter-container">
+                    <ProductFilter onFilterChange={handleFilterChange} />
                     <Sort onSortChange={handleSortChange} subCategory={subCategory} />
                 </div>
                 <ul className='products-list'>
@@ -161,14 +189,15 @@ function SubCategory() {
                         />
                     })}
                 </ul>
-            </main>
+            </main >
             {hasMoreProducts && products?.length >= 12 && (
                 <div className="load-more-container">
                     <button onClick={onFetchMoreProducts}
                         className='more-btn'
                     >Load More</button>
                 </div>
-            )}
+            )
+            }
         </>
     );
 }
