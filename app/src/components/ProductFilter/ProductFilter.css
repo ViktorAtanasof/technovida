@@ -1,0 +1,70 @@
+.filter-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.filter-container .sort-label {
+  margin-right: 0;
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.filter-container .sort-select {
+  padding: 0.625rem 1rem;
+  width: 150px;
+  font-size: 1rem;
+  color: #555;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.filter-container .sort-select:focus {
+  border-color: #66afe9;
+}
+
+.filter-container .sort-select option {
+  font-size: 1rem;
+  color: #333;
+}
+
+.filter-container .sort-select:hover {
+  background-color: #f1f1f1;
+}
+
+.filter-container .price-filter,
+.filter-container .brand-filter {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-container .price-filter label,
+.filter-container .brand-filter label {
+  font-size: 1rem;
+  color: #999;
+}
+
+.filters {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+  color: #192937;
+  padding: 0.625rem 1rem;
+  min-height: 0;
+  border-radius: 0.25rem;
+  align-self: flex-end;
+}
+
+@media (max-width: 718px) {
+    .sort-container {
+        gap: 0.5rem;
+    }
+}
