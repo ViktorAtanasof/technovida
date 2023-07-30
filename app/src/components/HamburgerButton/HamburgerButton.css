@@ -26,3 +26,21 @@
     transform: translateY(-5px);
     z-index: 75;
 }
+
+@media (max-width: 350px) {
+    .closeBtn {
+        margin-left: 305px;
+    }
+}
+
+@media (max-width: 340px) {
+    .closeBtn {
+        margin-left: 290px;
+    }
+}
+
+@media (max-width: 320px) {
+    .closeBtn {
+        margin-left: 280px;
+    }
+}
