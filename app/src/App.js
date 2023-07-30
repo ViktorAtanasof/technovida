@@ -1,8 +1,8 @@
+import { useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import './App.css';
 import Header from './components/Header/Header';
 import SubCategory from './components/SubCategory/SubCategory';
-import { useEffect } from 'react';
+import Footer from './components/Footer/Footer';
 
 function App() {
   const navigate = useNavigate();
@@ -20,6 +20,7 @@ function App() {
       <Routes>
         <Route path='/:category/:subCategory' element={<SubCategory />} />
       </Routes>
+      <Footer />
     </>
   );
 }
