@@ -23,10 +23,19 @@
   background-color: #192937;
   padding: 1rem;
   font-size: 1rem;
-  text-align: center;
 }
 
 /* Style the category menu list */
+.sidenav.open ul li,
+h3 {
+  padding-left: 1rem;
+}
+
+.sidenav.open a {
+  text-decoration: none;
+  color: unset;
+}
+
 .category-menu {
   padding-bottom: 1rem;
   border-bottom: 2px solid #192937;
@@ -42,7 +51,8 @@
   padding: 8px 0;
 }
 
-.category-menu li:hover {
+.category-menu li:hover,
+.sidenav.open li:hover {
   background-color: #f4f4f4;
   color: #1877f2;
   cursor: pointer;
