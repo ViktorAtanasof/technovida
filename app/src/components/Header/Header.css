@@ -1,5 +1,5 @@
 .header__background {
-    background-color: #192937;
+    background-color: var(--secondary-color);
     position: sticky;
     top: 0;
     padding-top: 0.5rem;

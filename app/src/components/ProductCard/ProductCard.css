@@ -48,8 +48,8 @@
 }
 
 .cart-btn {
-    background-color: #192937;
-    color: #feffff;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
     cursor: pointer;
     width: 100%;
     border: none;

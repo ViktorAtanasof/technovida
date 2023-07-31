@@ -19,8 +19,8 @@
 }
 
 .sidenavHeader {
-  color: #feffff;
-  background-color: #192937;
+  color: var(--primary-color);
+  background-color: var(--secondary-color);
   padding: 1rem;
   font-size: 1rem;
 }
@@ -38,28 +38,30 @@ h3 {
 
 .category-menu {
   padding-bottom: 1rem;
-  border-bottom: 2px solid #192937;
+  border-bottom: 2px solid var(--secondary-color);
 }
 
-.category-menu ul {
+.category-menu ul,
+.subcategory-menu ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.category-menu li {
+.category-menu li,
+.subcategory-menu li {
   padding: 8px 0;
 }
 
 .category-menu li:hover,
 .sidenav.open li:hover {
   background-color: #f4f4f4;
-  color: #1877f2;
+  color: var(--accent-color);
   cursor: pointer;
 }
 
 .category-menu li.active {
-  color: #1877f2;
+  color: var(--accent-color);
   background-color: #f4f4f4;
 }
 
@@ -68,18 +70,8 @@ h3 {
   padding-top: 1rem;
 }
 
-.subcategory-menu ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.subcategory-menu li {
-  padding: 8px 0;
-}
-
 .subcategory-menu span {
-  color: #1877f2;
+  color: var(--accent-color);
 }
 
 /* Transition animations */

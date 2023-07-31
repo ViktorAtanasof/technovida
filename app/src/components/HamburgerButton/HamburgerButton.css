@@ -1,5 +1,5 @@
 .hamburger-btn {
-    color: #feffff;
+    color: var(--primary-color);
     font-size: 1.5rem;
     font-weight: 400;
     cursor: pointer;
@@ -20,7 +20,7 @@
     top: 0;
     left: 0;
     margin-left: 310px;
-    color: #ffffff;
+    color: var(--primary-color);
     font-size: 3rem;
     cursor: pointer;
     transform: translateY(-5px);
@@ -29,18 +29,18 @@
 
 @media (max-width: 350px) {
     .closeBtn {
-        margin-left: 305px;
+        margin-left: 19.063rem;
     }
 }
 
 @media (max-width: 340px) {
     .closeBtn {
-        margin-left: 290px;
+        margin-left: 18.125rem;
     }
 }
 
 @media (max-width: 320px) {
     .closeBtn {
-        margin-left: 280px;
+        margin-left: 17.5rem;
     }
 }
