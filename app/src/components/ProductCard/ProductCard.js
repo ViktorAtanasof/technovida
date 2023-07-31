@@ -2,10 +2,9 @@ import '../ProductCard/ProductCard.css';
 import StarRating from '../StarRating/StarRating';
 
 function ProductCard({
-    id,
     product
 }) {
-    const shortenDesc = product.description.slice(0, 80) + '...';
+    const shortenDesc = product.description.length >= 80 ? product.description.slice(0, 80) + '...' : product.description;
 
     return (
         <li className="product__card">
