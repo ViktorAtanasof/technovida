@@ -8,7 +8,7 @@ function Header() {
         <div className="header__background">
             <header className="header__content">
                 <HamburgerButton />
-                <Link className='logo-link' to={'/'}>
+                <Link className='logo-link' to={'/phones/phones'}>
                     <img src={logo} alt="logo" className="logo" />
                 </Link>
             </header>
