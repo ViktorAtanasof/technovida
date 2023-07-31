@@ -7,12 +7,12 @@ import Footer from './components/Footer/Footer';
 function App() {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // Default page is phones so redirect to /phones/phones if the current path is '/'
-    if (window.location.pathname === '/') {
-      navigate('/phones/phones');
-    }
-  }, [navigate]);
+   useEffect(() => {
+     // Default page is phones so redirect to '/phones/phones' if the current path is '/'
+     if (window.location.pathname === '/') {
+       navigate('/phones/phones');
+     }
+   }, [navigate]);
 
   return (
     <>
