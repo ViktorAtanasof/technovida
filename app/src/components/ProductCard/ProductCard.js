@@ -4,7 +4,7 @@ import StarRating from '../StarRating/StarRating';
 function ProductCard({
     product
 }) {
-    const shortenDesc = product.description.length >= 80 ? product.description.slice(0, 80) + '...' : product.description;
+    const shortenDesc = product.description?.length >= 80 ? product.description.slice(0, 80) + '...' : product.description;
 
     return (
         <li className="product__card">

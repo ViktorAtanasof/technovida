@@ -86,6 +86,7 @@
   color: #888888d6;
 }
 
+/* Sort and filter container */
 .sort-filter-container {
   display: flex;
   flex-wrap: wrap;
