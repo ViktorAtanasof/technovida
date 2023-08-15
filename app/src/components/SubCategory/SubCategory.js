@@ -7,6 +7,7 @@ import ProductCard from '../ProductCard/ProductCard';
 import Sort from '../Sort/Sort';
 import ProductFilter from '../ProductFilter/ProductFilter';
 import { sortProducts } from '../../utils/sortProducts';
+import Spinner from '../Spinner/Spinner';
 
 function SubCategory() {
     const { category, subCategory } = useParams();
@@ -23,7 +24,7 @@ function SubCategory() {
         brandFilter: '',
     });
     const [sortOption, setSortOption] = useState('');
-
+    const [loading, setLoading] = useState(true);
     const capitalizedCategory = subCategory[0].toUpperCase() + subCategory.slice(1);
 
     const fetchProducts = async (category, subCategory, sortOption, filterOptions) => {
@@ -78,6 +79,7 @@ function SubCategory() {
             subCategorySnapshot.forEach((doc) => {
                 setSelectedSubCategoryDesc(doc.data().description);
             });
+            setLoading(false);
         } catch (error) {
             console.log(error);
         }
@@ -139,41 +141,47 @@ function SubCategory() {
     return (
         <>
             <main className='main-content'>
-                <section className='category-section'>
-                    <h2 className="category-title">{capitalizedCategory}</h2>
-                    <p className="sub-category-desc">{selectedSubCategoryDesc}</p>
-                    {category === 'phones' && (
-                        <p className="product-count">
-                            {currentlyDisplayedPhonesCount} of {totalPhonesCount} Products
-                        </p>
+                {loading
+                    ? <Spinner />
+                    : (
+                        <>
+
+                            <section className='category-section'>
+                                <h2 className="category-title">{capitalizedCategory}</h2>
+                                <p className="sub-category-desc">{selectedSubCategoryDesc}</p>
+                                {category === 'phones' && (
+                                    <p className="product-count">
+                                        {currentlyDisplayedPhonesCount} of {totalPhonesCount} Products
+                                    </p>
+                                )}
+                                {category === 'tablets' && (
+                                    <p className="product-count">
+                                        {currentlyDisplayedTabletsCount} of {totalTabletsCount} Products
+                                    </p>
+                                )}
+                            </section>
+                            <div className="sort-filter-container">
+                                <ProductFilter onFilterChange={handleFilterChange} />
+                                <Sort onSortChange={handleSortChange} subCategory={subCategory} />
+                            </div>
+                            <ul className='products-list'>
+                                {products?.length > 0 && products.map((product) => {
+                                    return <ProductCard
+                                        key={product.id}
+                                        product={product.data}
+                                    />
+                                })}
+                            </ul>
+                            {hasMoreProducts && (
+                                <div className="load-more-container">
+                                    <button onClick={onFetchMoreProducts}
+                                        className='more-btn'
+                                    >Load More</button>
+                                </div>
+                            )}
+                        </>
                     )}
-                    {category === 'tablets' && (
-                        <p className="product-count">
-                            {currentlyDisplayedTabletsCount} of {totalTabletsCount} Products
-                        </p>
-                    )}
-                </section>
-                <div className="sort-filter-container">
-                    <ProductFilter onFilterChange={handleFilterChange} />
-                    <Sort onSortChange={handleSortChange} subCategory={subCategory} />
-                </div>
-                <ul className='products-list'>
-                    {products?.length > 0 && products.map((product) => {
-                        return <ProductCard
-                            key={product.id}
-                            product={product.data}
-                        />
-                    })}
-                </ul>
             </main >
-            {hasMoreProducts && (
-                <div className="load-more-container">
-                    <button onClick={onFetchMoreProducts}
-                        className='more-btn'
-                    >Load More</button>
-                </div>
-            )
-            }
         </>
     );
 }
