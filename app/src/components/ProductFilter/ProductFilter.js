@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import '../ProductFilter/ProductFilter.css';
+import Button from '../Button/Button';
 
 function ProductFilter({
     onFilterChange
@@ -43,9 +44,7 @@ function ProductFilter({
                         <option value="huawei">Huawei</option>
                     </select>
                 </div>
-                <button onClick={handleFilterChange} className="filter-btn more-btn">
-                    Apply Filters
-                </button>
+                <Button onClick={handleFilterChange} text={'Apply Filters'}  filterBtn={'filter-btn'}/>
             </div>
         </div>
     );
