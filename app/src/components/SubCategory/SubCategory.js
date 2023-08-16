@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import '../SubCategory/SubCategory.css';
 import { useEffect, useState } from 'react';
 import { collection, getDocs, limit, query, startAfter, where } from 'firebase/firestore';
@@ -8,8 +8,10 @@ import Sort from '../Sort/Sort';
 import ProductFilter from '../ProductFilter/ProductFilter';
 import { sortProducts } from '../../utils/sortProducts';
 import Spinner from '../Spinner/Spinner';
+import Button from '../Button/Button';
 
 function SubCategory() {
+    const navigate = useNavigate();
     const { category, subCategory } = useParams();
     const [products, setProducts] = useState([]);
     const [selectedSubCategoryDesc, setSelectedSubCategoryDesc] = useState('');
@@ -72,7 +74,7 @@ function SubCategory() {
                 setTotalPhonesCount(phonesQuerySnap.size);
             }
 
-            // Fetch the description for the selected subcategory
+            // Fetch the description for the selected subcategory and non-existent subcategories
             const subCategoryRef = collection(db, 'subcategories');
             const subCategoryQuery = query(subCategoryRef, where('name', '==', subCategory));
             const subCategorySnapshot = await getDocs(subCategoryQuery);
@@ -86,8 +88,14 @@ function SubCategory() {
     }
 
     useEffect(() => {
+        if (category !== 'phones' && category !== 'tablets') {
+            // Redirect to "not found" page for invalid categories
+            navigate('/not-found');
+            return;
+        };
+
         fetchProducts(category, subCategory, sortOption, filterOptions);
-    }, [category, subCategory, sortOption, filterOptions]);
+    }, [category, subCategory, sortOption, filterOptions, navigate]);
 
     useEffect(() => {
         setSortOption('');
@@ -173,10 +181,8 @@ function SubCategory() {
                                 })}
                             </ul>
                             {hasMoreProducts && (
-                                <div className="load-more-container">
-                                    <button onClick={onFetchMoreProducts}
-                                        className='more-btn'
-                                    >Load More</button>
+                                <div className="btn__container">
+                                    <Button onClick={onFetchMoreProducts} text={'Load More'} />
                                 </div>
                             )}
                         </>
