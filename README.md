@@ -43,6 +43,7 @@
   # Products
   /{category}/{subCategory}
   
-  # Others (Home (Redirects to default category))
+  # Others (Home (Redirects to default category), Not Found)
   /
+  /not-found
 ```
